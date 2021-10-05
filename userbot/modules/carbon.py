@@ -1,3 +1,4 @@
+import asyncio
 import os
 from asyncio import sleep
 from time import sleep
@@ -8,8 +9,10 @@ from selenium.webdriver.chrome.options import Options
 
 from userbot import CHROME_DRIVER, CMD_HELP, GOOGLE_CHROME_BIN
 from userbot.events import register
+from userbot.utils import edit_delete, edit_or_reply
 
 CARBONLANG = "auto"
+LANG = "en"
 TTS_LANG = "en"
 TRT_LANG = "en"
 TEMP_DOWNLOAD_DIRECTORY = "/root/userbot/.bin"
@@ -22,22 +25,22 @@ async def setlang(prog):
     await prog.edit(f"Language for carbon.now.sh set to {CARBONLANG}")
 
 
-@register(outgoing=True, pattern="^.carbon1")
+@register(outgoing=True, pattern="^.carbon1(?: |$)(.*)")
 async def carbon_api(e):
-    """A Wrapper for carbon.now.sh"""
+    if e.fwd_from:
+        return
+    """ A Wrapper for carbon.now.sh """
     await e.edit("`Processing..`")
-    CARBON = "https://carbon.now.sh/?bg=rgba(249%2C237%2C212%2C0)&t=synthwave-84&wt=none&l=application%2Fjson&ds=true&dsyoff=20px&dsblur=0px&wc=true&wa=true&pv=56px&ph=0px&ln=false&fl=1&fm=IBM%20Plex%20Mono&fs=14.5px&lh=153%25&si=false&es=4x&wm=false&code={code}"
-    global CARBONLANG
+    CARBON = "https://carbon.now.sh/?l={lang}&code={code}"
     textx = await e.get_reply_message()
     pcode = e.text
     if pcode[8:]:
         pcode = str(pcode[8:])
     elif textx:
         pcode = str(textx.message)  # Importing message to module
+    pcode = deEmojify(pcode)
     code = quote_plus(pcode)  # Converting to urlencoded
-    await e.edit("`Processing..\n25%`")
-    if os.path.isfile("/root/userbot/.bin/carbon.png"):
-        os.remove("/root/userbot/.bin/carbon.png")
+    hell = await edit_or_reply(e, "`Carbonizing...\n25%`")
     url = CARBON.format(code=code, lang=CARBONLANG)
     chrome_options = Options()
     chrome_options.add_argument("--headless")
@@ -46,12 +49,12 @@ async def carbon_api(e):
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-gpu")
-    prefs = {"download.default_directory": "/root/userbot/.bin"}
+    prefs = {"download.default_directory": "./"}
     chrome_options.add_experimental_option("prefs", prefs)
     driver = webdriver.Chrome(executable_path=CHROME_DRIVER, options=chrome_options)
     driver.get(url)
-    await e.edit("`Processing..\n50%`")
-    download_path = "/root/userbot/.bin"
+    await hell.edit("`Be Patient...\n50%`")
+    download_path = "./"
     driver.command_executor._commands["send_command"] = (
         "POST",
         "/session/$sessionId/chromium/send_command",
@@ -64,27 +67,23 @@ async def carbon_api(e):
     driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
     # driver.find_element_by_xpath("//button[contains(text(),'4x')]").click()
     # driver.find_element_by_xpath("//button[contains(text(),'PNG')]").click()
-    await e.edit("`Processing..\n75%`")
+    await hell.edit("`Processing..\n75%`")
     # Waiting for downloading
-    while not os.path.isfile("/root/userbot/.bin/carbon.png"):
-        await sleep(0.5)
-    await e.edit("`Processing..\n100%`")
-    file = "/root/userbot/.bin/carbon.png"
-    await e.edit("`Uploading..`")
+    await asyncio.sleep(2)
+    await hell.edit("`Done Dana Done...\n100%`")
+    file = "./carbon.png"
+    await hell.edit("`Uploading..`")
     await e.client.send_file(
         e.chat_id,
         file,
-        caption="Made using [Carbon](https://carbon.now.sh/about/),\
-        \na project by [Dawn Labs](https://dawnlabs.io/)",
+        caption="Here's your carbon, \n Carbonised by UserBot",
         force_document=True,
         reply_to=e.message.reply_to_msg_id,
     )
-
-    os.remove("/root/userbot/.bin/carbon.png")
+    os.remove("./carbon.png")
     driver.quit()
     # Removing carbon.png after uploading
-    await e.delete()  # Deleting msg
-
+    await hell.delete()
 
 @register(outgoing=True, pattern=r"^\.carbon2")
 async def carbon_api(e):
