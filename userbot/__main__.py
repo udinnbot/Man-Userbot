@@ -6,7 +6,7 @@ import telethon.utils
 from telethon import TelegramClient
 from telethon.tl.functions.channels import JoinChannelRequest
 
-from userbot import ALIVE_NAME, API_KEY, API_HASH, BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID, LOGS, UPSTREAM_REPO_BRANCH, bot, tgbot
+from userbot import ALIVE_NAME, ALIVE_LOGO, API_KEY, API_HASH, BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID, LOGS, UPSTREAM_REPO_BRANCH, bot, tgbot
 from userbot.modules.core import load_module
 MAN_PIC = ALIVE_LOGO or "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg"
 
