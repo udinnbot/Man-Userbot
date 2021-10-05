@@ -9,7 +9,7 @@ from selenium.webdriver.chrome.options import Options
 
 from userbot import CHROME_DRIVER, CMD_HELP, GOOGLE_CHROME_BIN
 from userbot.events import register
-from userbot.utils import edit_delete, edit_or_reply
+from userbot.utils import edit_or_reply
 
 CARBONLANG = "auto"
 LANG = "en"
@@ -84,6 +84,7 @@ async def carbon_api(e):
     driver.quit()
     # Removing carbon.png after uploading
     await hell.delete()
+
 
 @register(outgoing=True, pattern=r"^\.carbon2")
 async def carbon_api(e):
