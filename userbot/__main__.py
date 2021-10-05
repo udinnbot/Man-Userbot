@@ -7,7 +7,6 @@ from telethon import TelegramClient
 from telethon.tl.functions.channels import JoinChannelRequest
 
 from userbot import ALIVE_NAME, ALIVE_LOGO, API_KEY, API_HASH, BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID, LOGS, UPSTREAM_REPO_BRANCH, bot, tgbot
-from userbot.modules.core import load_module
 MAN_PIC = ALIVE_LOGO or "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg"
 
 
@@ -36,22 +35,11 @@ else:
             LOGS.info("Pemeriksaan Selesai. Melanjutkan ke Langkah berikutnya")
             LOGS.info("🔰 Starting Man-UserBot 🔰")
             bot.loop.run_until_complete(manuserbot(BOT_USERNAME))
-            LOGS.info("🔥 Man-UserBot Startup Completed 🔥")
         else:
             bot.start()
     except Exception as e:
         LOGS.error(f"BOT_TOKEN - {str(e)}")
         sys.exit()
-
-
-# imports plugins...
-path = "userbot/modules/*.py"
-files = glob.glob(path)
-for name in files:
-    with open(name) as f:
-        path1 = Path(f.name)
-        shortname = path1.stem
-        load_module(shortname.replace(".py", ""))
 
 
 # let the party begin...
