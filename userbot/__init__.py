@@ -27,6 +27,7 @@ from redis import StrictRedis
 from dotenv import load_dotenv
 from requests import get
 from telethon.sync import TelegramClient, custom, events
+from telethon.network.connection.tcpabridged import ConnectionTcpAbridged
 from telethon.sessions import StringSession
 
 from .storage import Storage
@@ -309,8 +310,9 @@ if STRING_SESSION:
         session=StringSession(STRING_SESSION),
         api_id=API_KEY,
         api_hash=API_HASH,
+        connection=ConnectionTcpAbridged,
         auto_reconnect=True,
-        connection_retries=-1,
+        connection_retries=None,
     )
 else:
     bot = TelegramClient("userbot", API_KEY, API_HASH)
