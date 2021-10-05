@@ -42,12 +42,13 @@ async def man_userbot_on():
             await bot.send_file(
                 BOTLOG_CHATID,
                 MAN_PIC,
-                caption=f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n\n**➥ Userbot Version -** `{BOT_VER}`@`{UPSTREAM_REPO_BRANCH}`\n\n➥ **Ketik** `.ping` **atau** `.alive` **untuk Check BOT**\n➥ **Join @SharingUserbot Untuk Bantuan BOT**",
+                caption=f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n\n**➥ Userbot Version -** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n➥ **Ketik** `.ping` **atau** `.alive` **untuk Check BOT**\n➥ **Join @SharingUserbot Untuk Bantuan BOT**",
             )
     except Exception as e:
         LOGS.info(str(e))
     try:
         await bot(JoinChannelRequest("@Lunatic0de"))
+        await bot(JoinChannelRequest("@SharingUserbot"))
     except BaseException:
         pass
 bot.loop.create_task(man_userbot_on())
