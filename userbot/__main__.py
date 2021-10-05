@@ -35,9 +35,6 @@ LOGS.info(
 LOGS.info(
     f"Man-Userbot ⚙️ V{BOT_VER} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
 
-# that's life...
-
-
 async def man_userbot_on():
     try:
         if BOTLOG_CHATID != 0:
@@ -48,9 +45,6 @@ async def man_userbot_on():
             )
     except Exception as e:
         LOGS.info(str(e))
-
-
-# Join Channel
     try:
         await bot(JoinChannelRequest("@Lunatic0de"))
     except BaseException:
