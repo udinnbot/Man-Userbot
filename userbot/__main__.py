@@ -11,7 +11,7 @@ from importlib import import_module
 from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
 from telethon.tl.functions.channels import JoinChannelRequest
 
-from userbot import ALIVE_NAME, ALIVE_LOGO, BOT_VER, BOTLOG_CHATID, LOGS, UPSTREAM_REPO_BRANCH, bot
+from userbot import ALIVE_NAME, BOTLOG_CHATID, BOT_VER, LOGS, UPSTREAM_REPO_BRANCH, bot
 from userbot.modules import ALL_MODULES
 
 INVALID_PH = (
@@ -39,8 +39,8 @@ async def man_userbot_on():
     try:
         if BOTLOG_CHATID != 0:
             await bot.send_message(BOTLOG_CHATID,
-                caption=f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n━━\n➠ **Userbot Version -** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n➠ **Ketik** `.alive` **untuk Mengecheck Bot**\n━━",
-            )
+                                   caption=f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n━━\n➠ **Userbot Version -** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n➠ **Ketik** `.alive` **untuk Mengecheck Bot**\n━━",
+                                   )
     except Exception as e:
         LOGS.info(str(e))
     try:
