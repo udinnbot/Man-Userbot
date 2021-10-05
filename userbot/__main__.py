@@ -35,6 +35,7 @@ LOGS.info(
 LOGS.info(
     f"Man-Userbot ⚙️ V{BOT_VER} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
 
+
 async def man_userbot_on():
     try:
         if BOTLOG_CHATID != 0:
