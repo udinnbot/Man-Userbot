@@ -8,12 +8,12 @@ from userbot.events import register
 from userbot.utils import edit_delete, edit_or_reply
 
 
-@register(outgoing=True, pattern=r"^\.q")
+@register(outgoing=True, pattern=r"^\.q ?(.*)")
 async def _(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await edit_delete(event, "**Mohon Balas ke Pesan**", 15)
+        await edit_delete(event, "**Mohon Balas ke Pesan**")
         return
     reply_message = await event.get_reply_message()
     warna = event.pattern_match.group(1)
