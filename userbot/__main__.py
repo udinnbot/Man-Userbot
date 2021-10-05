@@ -9,6 +9,7 @@ import sys
 from importlib import import_module
 
 from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
+from telethon.tl.functions.channels import JoinChannelRequest
 
 from userbot import ALIVE_NAME, ALIVE_LOGO, BOT_VER, BOTLOG_CHATID, LOGS, UPSTREAM_REPO_BRANCH, bot
 from userbot.modules import ALL_MODULES
