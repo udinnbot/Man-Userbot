@@ -14,8 +14,6 @@ from telethon.tl.functions.channels import JoinChannelRequest
 from userbot import ALIVE_NAME, ALIVE_LOGO, BOT_VER, BOTLOG_CHATID, LOGS, UPSTREAM_REPO_BRANCH, bot
 from userbot.modules import ALL_MODULES
 
-MAN_PIC = ALIVE_LOGO or "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg"
-
 INVALID_PH = (
     "\nERROR: Nomor Telepon yang kamu masukkan SALAH."
     "\nTips: Gunakan Kode Negara beserta nomornya atau periksa nomor telepon Anda dan coba lagi."
@@ -40,10 +38,8 @@ LOGS.info(
 async def man_userbot_on():
     try:
         if BOTLOG_CHATID != 0:
-            await bot.send_file(
-                BOTLOG_CHATID,
-                MAN_PIC,
-                caption=f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n\n**➥ Userbot Version -** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n➥ **Ketik** `.ping` **atau** `.alive` **untuk Check BOT**\n➥ **Join @SharingUserbot Untuk Bantuan BOT**",
+            await bot.send_message(BOTLOG_CHATID,
+                caption=f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n━━\n➠ **Userbot Version -** `{BOT_VER}@{UPSTREAM_REPO_BRANCH}`\n➠ **Ketik** `.alive` **untuk Mengecheck Bot**\n━━",
             )
     except Exception as e:
         LOGS.info(str(e))
