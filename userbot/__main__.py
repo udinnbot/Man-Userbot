@@ -49,8 +49,6 @@ async def man_userbot_on():
         await bot(JoinChannelRequest("@Lunatic0de"))
     except BaseException:
         pass
-
-
 bot.loop.create_task(man_userbot_on())
 
 if len(sys.argv) not in (1, 3, 4):
