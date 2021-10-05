@@ -10,8 +10,10 @@ from importlib import import_module
 
 from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
 
-from userbot import ALIVE_NAME, BOT_VER, LOGS, bot
+from userbot import ALIVE_NAME, ALIVE_LOGO, BOT_VER, BOTLOG_CHATID, LOGS, UPSTREAM_REPO_BRANCH, bot
 from userbot.modules import ALL_MODULES
+
+MAN_PIC = ALIVE_LOGO or "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg"
 
 INVALID_PH = (
     "\nERROR: Nomor Telepon yang kamu masukkan SALAH."
@@ -33,8 +35,27 @@ LOGS.info(
 LOGS.info(
     f"Man-Userbot ⚙️ V{BOT_VER} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
 
-# Auto Join Channel
-await bot(JoinChannelRequest("@Lunatic0de"))
+# that's life...
+async def man_userbot_on():
+    try:
+        if BOTLOG_CHATID != 0:
+            await bot.send_file(
+                BOTLOG_CHATID,
+                MAN_PIC,
+                caption=f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n\n**➥ Userbot Version -** `{BOT_VER}`@`{UPSTREAM_REPO_BRANCH}`\n\n➥ **Ketik** `.ping` **atau** `.alive` **untuk Check BOT**\n➥ **Join @SharingUserbot Untuk Bantuan BOT**",
+            )
+    except Exception as e:
+        LOGS.info(str(e))
+
+
+# Join Channel
+    try:
+        await bot(JoinChannelRequest("@Lunatic0de"))
+    except BaseException:
+        pass
+
+
+bot.loop.create_task(man_userbot_on())
 
 if len(sys.argv) not in (1, 3, 4):
     bot.disconnect()
