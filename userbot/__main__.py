@@ -9,7 +9,6 @@ import sys
 from importlib import import_module
 
 from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
-from telethon.tl.functions.channels import JoinChannelRequest
 
 from userbot import ALIVE_NAME, BOT_VER, LOGS, bot
 from userbot.modules import ALL_MODULES
@@ -35,7 +34,7 @@ LOGS.info(
     f"Man-Userbot ⚙️ V{BOT_VER} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
 
 # Auto Join Channel
-    await bot(JoinChannelRequest("@Lunatic0de"))
+await bot(JoinChannelRequest("@Lunatic0de"))
 
 if len(sys.argv) not in (1, 3, 4):
     bot.disconnect()
