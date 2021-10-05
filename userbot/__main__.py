@@ -1,11 +1,10 @@
 import glob
-import os
 import sys
 from pathlib import Path
 
 import telethon.utils
 from telethon import TelegramClient
-from telethon.tl.functions.channels import InviteToChannelRequest, JoinChannelRequest
+from telethon.tl.functions.channels import JoinChannelRequest
 
 from userbot import ALIVE_NAME, APP_ID, API_HASH, BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID, LOGS, UPSTREAM_REPO_BRANCH, bot, tgbot
 from userbot.modules.core import load_module
