@@ -35,10 +35,7 @@ LOGS.info(
     f"Man-Userbot ⚙️ V{BOT_VER} [🔥 BERHASIL DIAKTIFKAN! 🔥]")
 
 # Auto Join Channel
-   try:
-        await bot(JoinChannelRequest("@Lunatic0de"))
-    except BaseException:
-        pass
+    await bot(JoinChannelRequest("@Lunatic0de"))
 
 if len(sys.argv) not in (1, 3, 4):
     bot.disconnect()
