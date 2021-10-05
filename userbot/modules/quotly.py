@@ -1,4 +1,5 @@
 import asyncio
+
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
@@ -32,14 +33,13 @@ async def _(event):
             await event.reply("**Silahkan Unblock @QuotLyBot dan coba lagi!!**")
             return
         if response.text.startswith("Hi!"):
-            await edit_or_reply(event, "**Mohon Menonaktifkan Pengaturan Privasi Forward Anda**"
+            await edit_or_reply(
+                event, "**Mohon Menonaktifkan Pengaturan Privasi Forward Anda**"
             )
         else:
             await event.delete()
             await bot.forward_messages(event.chat_id, response.message)
-    await bot.delete_messages(
-        conv.chat_id, [first.id, ok.id, second.id, response.id]
-    )
+    await bot.delete_messages(conv.chat_id, [first.id, ok.id, second.id, response.id])
 
 
 CMD_HELP.update(
