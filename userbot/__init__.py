@@ -351,20 +351,6 @@ with bot:
         sys.exit(1)
 
 
-async def check_alive():
-    await bot.send_message(BOTLOG_CHATID, "```🔥 Man-Userbot Berhasil Di Aktifkan 🔥```")
-    return
-
-with bot:
-    try:
-        bot.loop.run_until_complete(check_alive())
-    except BaseException:
-        LOGS.info(
-            "var BOTLOG_CHATID kamu belum di isi. "
-            "Buatlah grup telegram dan masukan bot @MissRose_bot lalu ketik /id "
-            "Masukan id grup nya di var BOTLOG_CHATID")
-        sys.exit(1)
-
 # Global Variables
 COUNT_MSG = 0
 USERS = {}
