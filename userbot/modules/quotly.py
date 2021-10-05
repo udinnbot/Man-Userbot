@@ -1,7 +1,5 @@
-import random
 from asyncio.exceptions import TimeoutError
 
-import requests
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
