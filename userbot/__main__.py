@@ -6,7 +6,7 @@ import telethon.utils
 from telethon import TelegramClient
 from telethon.tl.functions.channels import JoinChannelRequest
 
-from userbot import ALIVE_NAME, APP_ID, API_HASH, BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID, LOGS, UPSTREAM_REPO_BRANCH, bot, tgbot
+from userbot import ALIVE_NAME, API_KEY, API_HASH, BOT_TOKEN, BOT_USERNAME, BOT_VER, BOTLOG_CHATID, LOGS, UPSTREAM_REPO_BRANCH, bot, tgbot
 from userbot.modules.core import load_module
 HELL_PIC = ALIVE_LOGO or "https://telegra.ph/file/9dc4e335feaaf6a214818.jpg"
 
@@ -31,7 +31,7 @@ else:
         if BOT_USERNAME is not None:
             LOGS.info("Sedang Memeriksa BOT_USERNAME")
             bot.tgbot = TelegramClient(
-                "BOT_TOKEN", api_id=APP_ID, api_hash=API_HASH
+                "BOT_TOKEN", api_id=API_KEY, api_hash=API_HASH
             ).start(bot_token=BOT_TOKEN)
             LOGS.info("Pemeriksaan Selesai. Melanjutkan ke Langkah berikutnya")
             LOGS.info("🔰 Starting Man-UserBot 🔰")
@@ -70,7 +70,7 @@ async def man_is_on():
             await bot.send_file(
                 BOTLOG_CHATID,
                 MAN_PIC,
-                caption=f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n\n**➥ Userbot Version - {BOT_VER}@{UPSTREAM_REPO_BRANCH}**\n\n➥ **Ketik** `.ping` **atau** `.alive` **untuk Check BOT**\n➥ **Join @SharingUserbot Untuk Bantuan BOT**",
+                caption=f"🔥 **Man-Userbot Berhasil Di Aktifkan**\n\n**➥ Userbot Version -** `{BOT_VER}`@`{UPSTREAM_REPO_BRANCH}`\n➥ **Ketik** `.ping` **atau** `.alive` **untuk Check BOT**\n➥ **Join @SharingUserbot Untuk Bantuan BOT**",
             )
     except Exception as e:
         LOGS.info(str(e))
