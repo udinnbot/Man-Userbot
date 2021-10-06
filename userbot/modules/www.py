@@ -15,7 +15,7 @@ from speedtest import Speedtest
 from userbot import ALIVE_NAME, CMD_HELP, StartTime
 from userbot.events import register
 from userbot.utils import humanbytes
-from userbot.utils.markdown import mention
+from userbot.modules.mentions import mention
 
 absen = [
     "**eh ada risman**",
