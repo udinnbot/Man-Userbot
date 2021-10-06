@@ -358,6 +358,32 @@ with bot:
         sys.exit(1)
 
 
+async def update_restart_msg(chat_id, msg_id):
+    DEFAULTUSER = ALIVE_NAME or "Set `ALIVE_NAME` ConfigVar!"
+    message = (
+        f"**Man-UserBot v{BOT_VER} is back up and running!**\n\n"
+        f"**Telethon:** {version.__version__}\n"
+        f"**Python:** {python_version()}\n"
+        f"**User:** {DEFAULTUSER}"
+    )
+    await bot.edit_message(chat_id, msg_id, message)
+    return True
+
+
+try:
+    from userbot.modules.sql_helper.globals import delgvar, gvarstatus
+
+    chat_id, msg_id = gvarstatus("restartstatus").split("\n")
+    with bot:
+        try:
+            bot.loop.run_until_complete(update_restart_msg(int(chat_id), int(msg_id)))
+        except:
+            pass
+    delgvar("restartstatus")
+except AttributeError:
+    pass
+
+
 # Global Variables
 COUNT_MSG = 0
 USERS = {}
