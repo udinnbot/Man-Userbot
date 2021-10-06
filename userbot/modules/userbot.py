@@ -30,7 +30,9 @@ async def _(event):
     try:
         add_nouserbot(str(chat_id))
     except IntegrityError:
-        return await event.edit("**Obrolan yang diberikan sudah masuk ke list tanpa userbot.**")
+        return await event.edit(
+            "**Obrolan yang diberikan sudah masuk ke list tanpa userbot.**"
+        )
 
     await event.edit("**Blacklisted given chat!**")
 
@@ -79,7 +81,9 @@ async def _(event):
 
     chat_list = get_nouserbot()
     if not chat_list:
-        return await event.edit("**Anda belum memasukkan obrolan apa pun ke tanpa userbot!**")
+        return await event.edit(
+            "**Anda belum memasukkan obrolan apa pun ke tanpa userbot!**"
+        )
 
     msg = "**List Userbot diMatikan diObrolan:**\n\n"
 
