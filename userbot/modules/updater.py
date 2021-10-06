@@ -9,14 +9,7 @@ from os import environ, execle, remove
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 
-from userbot import (
-    BOTLOG,
-    BOTLOG_CHATID,
-    CMD_HELP,
-    HEROKU_API_KEY,
-    HEROKU_APP_NAME,
-    UPSTREAM_REPO_URL,
-)
+from userbot import CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME, UPSTREAM_REPO_URL
 from userbot.events import register
 
 
@@ -63,7 +56,8 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
                 break
         if heroku_app is None:
             await event.edit(
-                f"{txt}\n" "**Kredensial Heroku tidak valid untuk deploy Man-Userbot dyno.**"
+                f"{txt}\n"
+                "**Kredensial Heroku tidak valid untuk deploy Man-Userbot dyno.**"
             )
             return repo.__del__()
         try:
@@ -109,9 +103,7 @@ async def update(event, repo, ups_rem, ac_br):
         ups_rem.pull(ac_br)
     except GitCommandError:
         repo.git.reset("--hard", "FETCH_HEAD")
-    await event.edit(
-        "**Man-Userbot Berhasil Diupdate!** Userbot bisa di Gunakan Lagi."
-    )
+    await event.edit("**Man-Userbot Berhasil Diupdate!** Userbot bisa di Gunakan Lagi.")
 
     try:
         from userbot.modules.sql_helper.globals import addgvar, delgvar
@@ -183,7 +175,9 @@ async def upstream(event):
     if conf == "" and not force_update:
         await print_changelogs(event, ac_br, changelog)
         await event.delete()
-        return await event.respond("**Ketik** `.update deploy` **untuk Mengupdate Userbot.**")
+        return await event.respond(
+            "**Ketik** `.update deploy` **untuk Mengupdate Userbot.**"
+        )
 
     if force_update:
         await event.edit(
