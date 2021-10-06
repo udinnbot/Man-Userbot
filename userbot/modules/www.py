@@ -15,6 +15,7 @@ from speedtest import Speedtest
 from userbot import ALIVE_NAME, CMD_HELP, StartTime
 from userbot.events import register
 from userbot.utils import humanbytes
+from userbot.utils.markdown import mention
 
 absen = [
     "**eh ada risman**",
@@ -66,7 +67,7 @@ async def pingme(pong):
         f"**PONG!!🏓**\n"
         f"✣ **Pinger** - `%sms`\n"
         f"✣ **Uptime -** `{uptime}` \n"
-        f"**✦҈͜͡Owner :** `{ALIVE_NAME}`" % (duration)
+        f"**✦҈͜͡Owner :** `{mention}`" % (duration)
     )
 
 
@@ -100,7 +101,7 @@ async def pingme(pong):
         f"`%sms` \n"
         f"❃ **Uptime -** "
         f"`{uptime}` \n"
-        f"**✦҈͜͡➳ Master :** `{ALIVE_NAME}`" % (duration)
+        f"**✦҈͜͡➳ Master :** `{mention}`" % (duration)
     )
 
 
