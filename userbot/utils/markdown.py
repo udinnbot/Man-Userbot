@@ -19,6 +19,7 @@ from telethon.tl.types import (
 )
 from telethon.utils import add_surrogate, del_surrogate
 
+from userbot import bot
 from userbot.events import register
 from userbot.utils.logger import logging
 
