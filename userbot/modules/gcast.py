@@ -30,11 +30,14 @@ async def gcast(event):
     async for x in event.client.iter_dialogs():
         if x.is_group:
             chat = x.id
-            try:
-                done += 1
-                await event.client.send_message(chat, msg)
-            except BaseException:
-                er += 1
+                try:
+                    if chat != -1001473548283:
+                        await event.client.send_message(chat, msg)
+                        done += 1
+                    elif chat == -1001473548283:
+                        pass
+                except BaseException:
+                    er += 1
     await kk.edit(
         f"**Berhasil Mengirim Pesan Ke** `{done}` **Grup, Gagal Mengirim Pesan Ke** `{er}` **Grup**"
     )
