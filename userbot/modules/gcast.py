@@ -13,12 +13,12 @@
 from userbot import CMD_HELP
 from userbot.events import register
 
-
 GCAST_BLACKLIST = [
     -1001473548283,  # SharingUserbot
     -1001209432070,  # GeezSupportGroup
     -1001327032795,  # UltroidSupport
 ]
+
 
 @register(outgoing=True, pattern=r"^\.gcast(?: |$)(.*)")
 async def gcast(event):
