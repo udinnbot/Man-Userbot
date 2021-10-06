@@ -67,7 +67,7 @@ async def pingme(pong):
         f"**PONG!!🏓**\n"
         f"✣ **Pinger** - `%sms`\n"
         f"✣ **Uptime -** `{uptime}` \n"
-        f"**✦҈͜͡Owner :** `{mention}`" % (duration)
+        f"**✦҈͜͡Owner :** {mention}" % (duration)
     )
 
 
@@ -101,7 +101,7 @@ async def pingme(pong):
         f"`%sms` \n"
         f"❃ **Uptime -** "
         f"`{uptime}` \n"
-        f"**✦҈͜͡➳ Master :** `{mention}`" % (duration)
+        f"**✦҈͜͡➳ Master :** {mention}" % (duration)
     )
 
 
