@@ -24,9 +24,6 @@ absen = [
     "**Hadir kak maap telat** 🥺",
 ]
 
-me = await event.client.get_me()
-mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
-
 
 async def get_readable_time(seconds: int) -> str:
     count = 0
@@ -56,6 +53,8 @@ async def get_readable_time(seconds: int) -> str:
 @register(outgoing=True, pattern=r"^\.ping$")
 async def pingme(pong):
     """For .ping command, ping the userbot from any chat."""
+    me = await event.client.get_me()
+    mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
     await pong.edit("**✣**")
@@ -88,7 +87,8 @@ async def pingme(pong):
 @register(outgoing=True, pattern=r"^\.lping$")
 async def pingme(pong):
     """For .ping command, ping the userbot from any chat."""
-    await event.client.get_me()
+    me = await event.client.get_me()
+    mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
     await pong.edit("**★ PING ★**")
