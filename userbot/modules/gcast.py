@@ -14,6 +14,12 @@ from userbot import CMD_HELP
 from userbot.events import register
 
 
+GCAST_BLACKLIST = [
+    -1001473548283,  # SharingUserbot
+    -1001209432070,  # GeezSupportGroup
+    -1001327032795,  # UltroidSupport
+]
+
 @register(outgoing=True, pattern=r"^\.gcast(?: |$)(.*)")
 async def gcast(event):
     xx = event.pattern_match.group(1)
@@ -31,10 +37,10 @@ async def gcast(event):
         if x.is_group:
             chat = x.id
             try:
-                if chat != -1001473548283:
+                if chat in GCAST_BLACKLIST:
                     await event.client.send_message(chat, msg)
                     done += 1
-                elif chat == -1001473548283:
+                elif chat in GCAST_BLACKLIST:
                     pass
             except BaseException:
                 er += 1
