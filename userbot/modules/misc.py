@@ -54,10 +54,9 @@ async def randomise(items):
     """For .random command, get a random item from the list of items."""
     itemo = (items.text[8:]).split()
     if len(itemo) < 2:
-        await items.edit(
-            "`2 atau lebih banyak item diperlukan! Periksa .help random untuk info lebih lanjut.`"
+        return await items.edit(
+            "**2 atau lebih banyak item diperlukan! Periksa** `.help random` **untuk info lebih lanjut.**"
         )
-        return
     index = randint(1, len(itemo) - 1)
     await items.edit(
         "**Query: **\n`" + items.text[8:] + "`\n**Output: **\n`" + itemo[index] + "`"
@@ -99,10 +98,15 @@ async def killdabot(event):
 @register(outgoing=True, pattern=r"^\.restart$")
 async def killdabot(event):
     await event.edit("**Man-Userbot Berhasil di Restart**")
-    if BOTLOG:
-        await event.client.send_message(
-            BOTLOG_CHATID, "#RESTART \n" "**Man-Userbot Berhasil Di Restart**"
-        )
+
+    try:
+        from userbot.modules.sql_helper.globals import addgvar, delgvar
+
+        delgvar("restartstatus")
+        addgvar("restartstatus", f"{event.chat_id}\n{event.id}")
+    except AttributeError:
+        pass
+
     # Spin a new instance of bot
     args = [sys.executable, "-m", "userbot"]
     execle(sys.executable, *args, environ)
