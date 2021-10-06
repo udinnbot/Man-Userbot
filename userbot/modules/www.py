@@ -14,7 +14,6 @@ from speedtest import Speedtest
 
 from userbot import ALIVE_NAME, CMD_HELP, StartTime
 from userbot.events import register
-from userbot.modules.markdown import mention
 from userbot.utils import humanbytes
 
 absen = [
@@ -55,6 +54,7 @@ async def get_readable_time(seconds: int) -> str:
 @register(outgoing=True, pattern=r"^\.ping$")
 async def pingme(pong):
     """For .ping command, ping the userbot from any chat."""
+    user = await event.client.get_me()
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
     await pong.edit("**✣**")
@@ -67,7 +67,7 @@ async def pingme(pong):
         f"**PONG!!🏓**\n"
         f"✣ **Pinger** - `%sms`\n"
         f"✣ **Uptime -** `{uptime}` \n"
-        f"**✦҈͜͡Owner :** {mention}" % (duration)
+        f"**✦҈͜͡Owner :** [{ALIVE_NAME}](tg://user?id={user.id})" % (duration)
     )
 
 
@@ -87,6 +87,7 @@ async def pingme(pong):
 @register(outgoing=True, pattern=r"^\.lping$")
 async def pingme(pong):
     """For .ping command, ping the userbot from any chat."""
+    user = await event.client.get_me()
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
     await pong.edit("**★ PING ★**")
@@ -101,7 +102,7 @@ async def pingme(pong):
         f"`%sms` \n"
         f"❃ **Uptime -** "
         f"`{uptime}` \n"
-        f"**✦҈͜͡➳ Master :** {mention}" % (duration)
+        f"**✦҈͜͡➳ Master :** [{ALIVE_NAME}](tg://user?id={user.id})" % (duration)
     )
 
 
