@@ -37,10 +37,10 @@ async def gcast(event):
         if x.is_group:
             chat = x.id
             try:
-                if chat != GCAST_BLACKLIST:
+                if chat not GCAST_BLACKLIST:
                     await event.client.send_message(chat, msg)
                     done += 1
-                elif chat != GCAST_BLACKLIST:
+                elif chat not GCAST_BLACKLIST:
                     pass
             except BaseException:
                 er += 1
