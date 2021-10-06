@@ -33,7 +33,7 @@ async def gcast(event):
             try:
                 if chat != -1001473548283:
                     await event.client.send_message(chat, msg)
-                        done += 1
+                    done += 1
                 elif chat == -1001473548283:
                     pass
             except BaseException:
