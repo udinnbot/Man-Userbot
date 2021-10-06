@@ -7,14 +7,12 @@
     Information Superhighway (yes, Internet). """
 
 import random
-import re
 import time
-
 from datetime import datetime
-from speedtest import Speedtest
-from telethon.tl import types
 
-from userbot import ALIVE_NAME, CMD_HELP, StartTime, bot
+from speedtest import Speedtest
+
+from userbot import ALIVE_NAME, CMD_HELP, StartTime
 from userbot.events import register
 from userbot.modules.mentions import mention
 from userbot.utils import humanbytes
