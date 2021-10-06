@@ -54,7 +54,7 @@ async def _(event):
         )
 
 
-@register(outgoing=True, pattern=r"^\.setflood(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.setflood(?:\s|$)([\s\S]*)")
 async def _(event):
     input_str = event.pattern_match.group(1)
     event = await event.edit("`Processing...`")
