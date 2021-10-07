@@ -290,7 +290,7 @@ async def get_pack_info(event):
 
     try:
         stickerset_attr = rep_msg.document.attributes[1]
-        await event.edit("`Fetching details of the sticker pack, please wait..`")
+        await event.edit("`Processing...`")
     except BaseException:
         return await event.edit("**Ini bukan sticker, Mohon balas ke sticker.**")
 
@@ -311,8 +311,7 @@ async def get_pack_info(event):
             pack_emojis.append(document_sticker.emoticon)
 
     OUTPUT = (
-        f"➠ **Sticker Title:** `{get_stickerset.set.title}\n`"
-        f"➠ **Nama Pendek Sticker:** `{get_stickerset.set.short_name}`\n"
+        f"➠ **Nama Sticker:** [{get_stickerset.set.title}](http://t.me/addstickers/{get_stickerset.set.short_name})\n`"
         f"➠ **Official:** `{get_stickerset.set.official}`\n"
         f"➠ **Arsip:** `{get_stickerset.set.archived}`\n"
         f"➠ **Sticker Dalam Pack:** `{len(get_stickerset.packs)}`\n"
@@ -322,7 +321,7 @@ async def get_pack_info(event):
     await event.edit(OUTPUT)
 
 
-@register(outgoing=True, pattern=r"^\.delstiker ?(.*)")
+@register(outgoing=True, pattern=r"^\.delsticker ?(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -411,7 +410,7 @@ async def _(event):
                 )
             else:
                 await event.edit(
-                    f"**Berhasil Mengedit Emoji Stiker**\n**Emoji Baru :** {emot}"
+                    f"**Berhasil Mengedit Emoji Stiker**\n**Emoji Baru:** {emot}"
                 )
 
 
