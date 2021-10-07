@@ -526,12 +526,12 @@ async def _(event):
 async def get_users(event):
     man_ = event.text[11:]
     chat_man = man_.lower()
-    restricted = ["@SharingUserbot"]
-    man = await edit_or_reply(event, f"__Mengundang anggota dari__ {man_}")
-    if chat_man in restricted:
-        await man.edit("Anda tidak dapat Mengundang Anggota dari sana.")
+    restricted = ["@SharingUserbot", "@sharinguserbot"]
+    man = await edit_or_reply(event, f"**Mengundang Member Dari Group {man_}**")
+    if chat_man not in restricted:
+        await man.edit("**Anda tidak dapat Mengundang Anggota dari sana.**")
         await bot.send_message(
-            -1001473548283, "**Maaf telah mengundang anggota dari sini.**"
+            -1001473548283, "**Maaf Telah Mencuri Member dari Sini.**"
         )
         return
     manuserbot = await get_chatinfo(event)
@@ -641,8 +641,8 @@ CMD_HELP.update(
         "invite": "**Plugin : **`invite`\
         \n\n  •  **Syntax :** `.invite` <username/user id>\
         \n  •  **Function : **Untuk Menambahkan/invite pengguna ke group chat.\
-        \n\n  •  **Syntax :** `.inviteall` <username group>\
-        \n  •  **Function : **Untuk Menambahkan/invite pengguna dari grup yang ditargetkan ke grup Anda. Kek Nyulik member dari satu grup chat ke grup chat lainnya.\
+        \n\n  •  **Syntax :** `.inviteall` <username grup yang mau di culik membernya>\
+        \n  •  **Function : **Untuk Menambahkan/invite pengguna dari grup yang ditargetkan ke grup Anda. (ketik perintah `.inviteall` di gc lu)\
     "
     }
 )
