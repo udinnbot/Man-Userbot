@@ -4,6 +4,26 @@
 # you may not use this file except in compliance with the License.
 """ Userbot module containing userid, chatid and log commands"""
 
+import asyncio
+import csv
+import random
+from asyncio import sleep
+from telethon.errors.rpcerrorlist import (
+    UserAlreadyParticipantError,
+    UserPrivacyRestrictedError,
+    UserNotMutualContactError
+)
+from telethon.tl.functions.channels import (
+    InviteToChannelRequest,
+    EditBannedRequest,
+    GetFullChannelRequest)
+from telethon.tl.types import InputPeerUser, ChatBannedRights
+from telethon.tl import functions
+from telethon.tl.functions.messages import GetFullChatRequest
+from telethon.errors import (
+    ChannelInvalidError,
+    ChannelPrivateError,
+    ChannelPublicGroupNaError)
 from asyncio import sleep
 from datetime import datetime
 from math import sqrt
@@ -545,6 +565,62 @@ async def get_users(event):
     )
 
 
+# Scraper & Add Member Telegram 
+# Coded By Abdul <https://github.com/DoellBarr>
+
+
+@register(outgoing=True, pattern=r"^\.getmember$")
+async def scrapmem(event):
+    chat = event.chat_id
+    await event.edit("`Processing...`")
+    event.client
+    members = await event.client.get_participants(chat, aggressive=True)
+
+    with open("members.csv", "w", encoding="UTF-8") as f:
+        writer = csv.writer(f, delimiter=",", lineterminator="\n")
+        writer.writerow(["user_id", "hash"])
+        for member in members:
+            writer.writerow([member.id, member.access_hash])
+    await event.edit("**Berhasil Mengumpulkan Member**")
+
+
+@register(outgoing=True, pattern=r"^\.addmember$")
+async def admem(event):
+    await event.edit("`Proses Menambahkan 0 Member...`")
+    chat = await event.get_chat()
+    event.client
+    users = []
+    with open("members.csv", encoding="UTF-8") as f:
+        rows = csv.reader(f, delimiter=",", lineterminator="\n")
+        next(rows, None)
+        for row in rows:
+            user = {'id': int(row[0]), 'hash': int(row[1])}
+            users.append(user)
+    n = 0
+    for user in users:
+        n += 1
+        if n % 30 == 0:
+            await event.edit(f"**Mencapai 30 anggota, tunggu selama** `{900/60}` **menit**")
+            await asyncio.sleep(900)
+        try:
+            userin = InputPeerUser(user['id'], user['hash'])
+            await event.client(InviteToChannelRequest(chat, [userin]))
+            await asyncio.sleep(random.randrange(5, 7))
+            await event.edit(f"**Proses Menambahkan** `{n}` **Member**")
+        except TypeError:
+            n -= 1
+            continue
+        except UserAlreadyParticipantError:
+            n -= 1
+            continue
+        except UserPrivacyRestrictedError:
+            n -= 1
+            continue
+        except UserNotMutualContactError:
+            n -= 1
+            continue
+
+
 CMD_HELP.update(
     {
         "chat": "**Plugin : **`chat`\
@@ -610,6 +686,21 @@ CMD_HELP.update(
         \n\n  •  **Syntax :** `regexninja off`)\
         \n  •  **Function : **Menonaktifkan modul ninja regex secara global. \
         \n\n  •  **NOTE :** Modul Regex Ninja dapat membantu menghapus pesan pemicu bot regex.\
+    "
+    }
+)
+
+
+CMD_HELP.update(
+    {
+        "scraper": "**Plugin : **`scraper`\
+        \n\n  •  **Syntax :** `.getmember`\
+        \n  •  **Function : **Untuk Mengumpulkan Anggota dari group chat.\
+        \n\n  •  **Syntax :** `.addmember`\
+        \n  •  **Function : **Untuk Menambahkan Anggota ke group chat.\
+        \n\n**Cara Menggunakannya:** \
+        \n1. Anda harus melakukan `.getmemb` terlebih dahulu di Grup Chat Orang lain.\
+        \n2. Buka Grup Anda dan ketik `.addmemb` untuk menambahkan mereka ke grup Anda.\
     "
     }
 )
