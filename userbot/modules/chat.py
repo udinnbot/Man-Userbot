@@ -8,23 +8,6 @@ import asyncio
 import csv
 import random
 from asyncio import sleep
-from telethon.errors.rpcerrorlist import (
-    UserAlreadyParticipantError,
-    UserPrivacyRestrictedError,
-    UserNotMutualContactError
-)
-from telethon.tl.functions.channels import (
-    InviteToChannelRequest,
-    EditBannedRequest,
-    GetFullChannelRequest)
-from telethon.tl.types import InputPeerUser, ChatBannedRights
-from telethon.tl import functions
-from telethon.tl.functions.messages import GetFullChatRequest
-from telethon.errors import (
-    ChannelInvalidError,
-    ChannelPrivateError,
-    ChannelPublicGroupNaError)
-from asyncio import sleep
 from datetime import datetime
 from math import sqrt
 
@@ -35,12 +18,23 @@ from telethon.errors import (
     ChannelPrivateError,
     ChannelPublicGroupNaError,
 )
-from telethon.tl.functions.channels import GetFullChannelRequest, GetParticipantsRequest
+from telethon.errors.rpcerrorlist import (
+    UserAlreadyParticipantError,
+    UserNotMutualContactError,
+    UserPrivacyRestrictedError,
+)
+from telethon.tl import functions
+from telethon.tl.functions.channels import (
+    GetFullChannelRequest,
+    GetParticipantsRequest,
+    InviteToChannelRequest,
+)
 from telethon.tl.functions.messages import GetFullChatRequest, GetHistoryRequest
 from telethon.tl.types import (
     ChannelParticipantAdmin,
     ChannelParticipantsAdmins,
     ChannelParticipantsBots,
+    InputPeerUser,
     MessageActionChannelMigrateFrom,
 )
 from telethon.utils import get_input_location
@@ -565,7 +559,7 @@ async def get_users(event):
     )
 
 
-# Scraper & Add Member Telegram 
+# Scraper & Add Member Telegram
 # Coded By Abdul <https://github.com/DoellBarr>
 
 
@@ -594,16 +588,18 @@ async def admem(event):
         rows = csv.reader(f, delimiter=",", lineterminator="\n")
         next(rows, None)
         for row in rows:
-            user = {'id': int(row[0]), 'hash': int(row[1])}
+            user = {"id": int(row[0]), "hash": int(row[1])}
             users.append(user)
     n = 0
     for user in users:
         n += 1
         if n % 30 == 0:
-            await event.edit(f"**Mencapai 30 anggota, tunggu selama** `{900/60}` **menit**")
+            await event.edit(
+                f"**Mencapai 30 anggota, tunggu selama** `{900/60}` **menit**"
+            )
             await asyncio.sleep(900)
         try:
-            userin = InputPeerUser(user['id'], user['hash'])
+            userin = InputPeerUser(user["id"], user["hash"])
             await event.client(InviteToChannelRequest(chat, [userin]))
             await asyncio.sleep(random.randrange(5, 7))
             await event.edit(f"**Proses Menambahkan** `{n}` **Member**")
