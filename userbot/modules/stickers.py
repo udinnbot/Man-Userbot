@@ -7,26 +7,26 @@
 import asyncio
 import io
 import math
-import os
 import random
-import textwrap
 import urllib.request
 from os import remove
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
 from telethon import events
-from telethon.errors import PackShortNameOccupiedError
 from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl import functions, types
 from telethon.tl.functions.messages import GetStickerSetRequest
-from telethon.tl.types import DocumentAttributeFilename, DocumentAttributeSticker, InputStickerSetID, MessageMediaPhoto, InputMessagesFilterDocument
-from telethon.utils import get_input_document
+from telethon.tl.types import (
+    DocumentAttributeFilename,
+    DocumentAttributeSticker,
+    InputStickerSetID,
+    MessageMediaPhoto,
+)
 
 from userbot import CMD_HELP
 from userbot import S_PACK_NAME as custompack
 from userbot import bot
 from userbot.events import register
-from userbot.utils import edit_delete, edit_or_reply
+from userbot.utils import edit_or_reply
 
 KANGING_STR = [
     "Wao.,Bagus Nih...Colong Dulu Yekan..",
@@ -349,11 +349,18 @@ async def _(event):
         except YouBlockedUserError:
             await event.reply("**Buka blokir @Stiker dan coba lagi**")
             return
-        if response.text.startswith("Sorry, I can't do this, it seems that you are not the owner of the relevant pack."):
-            await event.edit("**Maaf, Sepertinya Anda bukan Pemilik Sticker pack ini.**"
+        if response.text.startswith(
+            "Sorry, I can't do this, it seems that you are not the owner of the relevant pack."
+        ):
+            await event.edit(
+                "**Maaf, Sepertinya Anda bukan Pemilik Sticker pack ini.**"
             )
-        elif response.text.startswith("You don't have any sticker packs yet. You can create one using the /newpack command."):
-            await event.edit("**Anda tidak memiliki stiker pack untuk di hapus** \n\n**@Stickers : Buat sticker pack dulu**")
+        elif response.text.startswith(
+            "You don't have any sticker packs yet. You can create one using the /newpack command."
+        ):
+            await event.edit(
+                "**Anda tidak memiliki stiker pack untuk di hapus** \n\n**@Stickers : Buat sticker pack dulu**"
+            )
         elif response.text.startswith("Please send me the sticker."):
             await event.edit("**Tolong Reply ke Sticker yang ingin dihapus**")
         elif response.text.startswith("Invalid pack selected."):
@@ -397,12 +404,17 @@ async def _(event):
                 await event.reply("**Buka blokir @Stiker dan coba lagi**")
                 return
             if response.text.startswith("Invalid pack selected."):
-                await event.edit("**Maaf Paket yang dipilih tidak valid.**"
+                await event.edit("**Maaf Paket yang dipilih tidak valid.**")
+            elif response.text.startswith(
+                "Please send us an emoji that best describes your sticker."
+            ):
+                await event.edit(
+                    "**Silahkan Kirimkan emoji yang paling menggambarkan stiker Anda.**"
                 )
-            elif response.text.startswith("Please send us an emoji that best describes your sticker."):
-                await event.edit("**Silahkan Kirimkan emoji yang paling menggambarkan stiker Anda.**")
             else:
-                await event.edit(f"**Berhasim Mengedit Emoji stiker**\n\n**Emoji Baru :** {emot}")
+                await event.edit(
+                    f"**Berhasim Mengedit Emoji stiker**\n\n**Emoji Baru :** {emot}"
+                )
 
 
 @register(outgoing=True, pattern=r"^\.getsticker$")
