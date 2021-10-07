@@ -98,9 +98,9 @@ async def kang(args):
                 # pack
                 emoji = splat[1]
 
-        u_name = user.username
+        u_id = user.id
         f_name = user.first_name
-        packname = f"StickerBy{u_name}_{pack}"
+        packname = f"Sticker_{u_id}_{pack}"
         custom_packnick = f"{custompack}" or f"{f_name}"
         packnick = f"{custom_packnick}"
         cmd = "/newpack"
@@ -133,7 +133,7 @@ async def kang(args):
                 x = await conv.get_response()
                 while "120" in x.text:
                     pack += 1
-                    packname = f"StickerBy{u_name}_{pack}"
+                    packname = f"Sticker_{u_id}_{pack}"
                     packnick = f"{custom_packnick}"
                     await args.edit(
                         "`Switching to Pack "
