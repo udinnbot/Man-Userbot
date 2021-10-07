@@ -4,27 +4,29 @@
 # you may not use this file except in compliance with the License.
 #
 
+import asyncio
 import io
 import math
+import os
 import random
+import textwrap
 import urllib.request
 from os import remove
 
-import requests
-from bs4 import BeautifulSoup as bs
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
+from telethon import events
+from telethon.errors import PackShortNameOccupiedError
+from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.tl import functions, types
 from telethon.tl.functions.messages import GetStickerSetRequest
-from telethon.tl.types import (
-    DocumentAttributeFilename,
-    DocumentAttributeSticker,
-    InputStickerSetID,
-    MessageMediaPhoto,
-)
+from telethon.tl.types import DocumentAttributeFilename, DocumentAttributeSticker, InputStickerSetID, MessageMediaPhoto, InputMessagesFilterDocument
+from telethon.utils import get_input_document
 
 from userbot import CMD_HELP
 from userbot import S_PACK_NAME as custompack
 from userbot import bot
 from userbot.events import register
+from userbot.utils import edit_delete, edit_or_reply
 
 KANGING_STR = [
     "Wao.,Bagus Nih...Colong Dulu Yekan..",
@@ -318,6 +320,89 @@ async def get_pack_info(event):
     )
 
     await event.edit(OUTPUT)
+
+
+@register(outgoing=True, pattern=r"^\.delstiker ?(.*)")
+async def _(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        await event.edit("**Mohon Reply ke Sticker.**")
+        return
+    reply_message = await event.get_reply_message()
+    chat = "@Stickers"
+    reply_message.sender
+    if reply_message.sender.bot:
+        await edit_or_reply(event, "**Mohon Reply ke Sticker.**")
+        return
+    await event.edit("`Processing...`")
+    async with bot.conversation(chat) as conv:
+        try:
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=429000)
+            )
+            await conv.send_message("/delsticker")
+            await conv.get_response()
+            await asyncio.sleep(2)
+            await bot.forward_messages(chat, reply_message)
+            response = await response
+        except YouBlockedUserError:
+            await event.reply("**Buka blokir @Stiker dan coba lagi**")
+            return
+        if response.text.startswith("Sorry, I can't do this, it seems that you are not the owner of the relevant pack."):
+            await event.edit("**Maaf, Sepertinya Anda bukan Pemilik Sticker pack ini.**"
+            )
+        elif response.text.startswith("You don't have any sticker packs yet. You can create one using the /newpack command."):
+            await event.edit("**Anda tidak memiliki stiker pack untuk di hapus** \n\n**@Stickers : Buat sticker pack dulu**")
+        elif response.text.startswith("Please send me the sticker."):
+            await event.edit("**Tolong Reply ke Sticker yang ingin dihapus**")
+        elif response.text.startswith("Invalid pack selected."):
+            await event.edit("**Maaf Paket yang dipilih tidak valid.**")
+        else:
+            await event.edit("**Berhasil Menghapus stiker.**")
+
+
+@register(outgoing=True, pattern=r"^\.editsticker ?(.*)")
+async def _(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        await event.edit("**Mohon Reply ke Sticker.**")
+        return
+    reply_message = await event.get_reply_message()
+    emot = event.pattern_match.group(1)
+    chat = "@Stickers"
+    reply_message.sender
+    if reply_message.sender.bot:
+        await edit_or_reply(event, "**Mohon Reply ke Sticker.**")
+        return
+    await event.edit("`Processing...`")
+    if emot == "":
+        await event.edit("**Apakah kau mabuk?**")
+    else:
+        async with bot.conversation(chat) as conv:
+            try:
+                response = conv.wait_event(
+                    events.NewMessage(incoming=True, from_users=429000)
+                )
+                await conv.send_message(f"/editsticker")
+                await conv.get_response()
+                await asyncio.sleep(2)
+                await bot.forward_messages(chat, reply_message)
+                await conv.get_response()
+                await asyncio.sleep(2)
+                await conv.send_message(f"{emot}")
+                response = await response
+            except YouBlockedUserError:
+                await event.reply("**Buka blokir @Stiker dan coba lagi**")
+                return
+            if response.text.startswith("Invalid pack selected."):
+                await event.edit("**Maaf Paket yang dipilih tidak valid.**"
+                )
+            elif response.text.startswith("Please send us an emoji that best describes your sticker."):
+                await event.edit("**Silahkan Kirimkan emoji yang paling menggambarkan stiker Anda.**")
+            else:
+                await event.edit(f"**Berhasim Mengedit Emoji stiker**\n\n**Emoji Baru :** {emot}")
 
 
 @register(outgoing=True, pattern=r"^\.getsticker$")
