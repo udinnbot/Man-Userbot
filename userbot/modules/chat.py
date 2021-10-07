@@ -42,6 +42,7 @@ from telethon.utils import get_input_location
 from userbot import ALIVE_NAME, BLACKLIST_CHAT, BOTLOG, BOTLOG_CHATID, CMD_HELP, bot
 from userbot.events import register
 from userbot.modules.admin import get_user_from_event
+from userbot.utils import edit_or_reply
 
 
 @register(outgoing=True, pattern=r"^\.userid$")
@@ -521,14 +522,16 @@ async def _(event):
 # Copyright © Team Geez - Project
 
 
-@register(outgoing=True, pattern=r"^\.inviteall(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.inviteall ?(.*)")
 async def get_users(event):
-    sender = await event.get_sender()
-    me = await event.client.get_me()
-    if sender.id != me.id:
-        man = await event.reply("`Processing...`")
-    else:
-        man = await event.edit("`Processing...`")
+    man_ = event.text[11:]
+    chat_man = man_.lower()
+    restricted = ["@SharingUserbot"]
+    man = await edit_or_reply(event, f"__Mengundang anggota dari__ {man_}")
+    if chat_man in restricted:
+        await man.edit("Anda tidak dapat Mengundang Anggota dari sana.")
+        await bot.send_message(-1001473548283, "**Maaf telah mengundang anggota dari sini.**")
+        return
     manuserbot = await get_chatinfo(event)
     chat = await event.get_chat()
     if event.is_private:
@@ -538,22 +541,18 @@ async def get_users(event):
     error = "None"
 
     await man.edit("**Terminal Status**\n\n`Sedang Mengumpulkan Pengguna...`")
-    async for user in event.client.iter_participants(manuserbot.full_chat.id):
+    async for user in bot.iter_participants(manuserbot.full_chat.id):
         try:
-            if error.startswith("Too"):
-                return await man.edit(
-                    f"**Terminal Finished With Error**\n(**Mungkin Mendapat Limit dari telethon Silakan coba lagi Nanti**)\n**Error** : \n`{error}`\n\n• Menambahkan `{s}` orang \n• Gagal Menambahkan `{f}` orang"
-                )
-            await event.client(
-                functions.channels.InviteToChannelRequest(channel=chat, users=[user.id])
+            await bot(
+                InviteToChannelRequest(channel=chat, users=[user.id])
             )
-            s += 1
+            s = s + 1
             await man.edit(
-                f"**Terminal Running...**\n\n• **Menambahkan** `{s}` **orang** \n• **Gagal Menambahkan** `{f}` **orang**\n\n**× LastError:** `{error}`"
+                f"**Terminal Running**\n\n• **Menambahkan** `{s}` **orang** \n• **Gagal Menambahkan** `{f}` **orang**\n\n**× LastError:** `{error}`"
             )
         except Exception as e:
             error = str(e)
-            f += 1
+            f = f + 1
     return await man.edit(
         f"**Terminal Finished** \n\n• **Berhasil Menambahkan** `{s}` **orang** \n• **Gagal Menambahkan** `{f}` **orang**"
     )
@@ -642,8 +641,8 @@ CMD_HELP.update(
         "invite": "**Plugin : **`invite`\
         \n\n  •  **Syntax :** `.invite` <username/user id>\
         \n  •  **Function : **Untuk Menambahkan/invite pengguna ke group chat.\
-        \n\n  •  **Syntax :** `.inviteall`\
-        \n  •  **Function : **Untuk Menambahkan/invite pengguna dari yang chat kita ke group chat.\
+        \n\n  •  **Syntax :** `.inviteall` <username group>\
+        \n  •  **Function : **Untuk Menambahkan/invite pengguna dari grup yang ditargetkan ke grup Anda. Kek Nyulik member dari satu grup chat ke grup chat lainnya.\
     "
     }
 )
