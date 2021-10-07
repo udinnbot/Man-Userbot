@@ -530,7 +530,9 @@ async def get_users(event):
     man = await edit_or_reply(event, f"__Mengundang anggota dari__ {man_}")
     if chat_man in restricted:
         await man.edit("Anda tidak dapat Mengundang Anggota dari sana.")
-        await bot.send_message(-1001473548283, "**Maaf telah mengundang anggota dari sini.**")
+        await bot.send_message(
+            -1001473548283, "**Maaf telah mengundang anggota dari sini.**"
+        )
         return
     manuserbot = await get_chatinfo(event)
     chat = await event.get_chat()
@@ -543,9 +545,7 @@ async def get_users(event):
     await man.edit("**Terminal Status**\n\n`Sedang Mengumpulkan Pengguna...`")
     async for user in bot.iter_participants(manuserbot.full_chat.id):
         try:
-            await bot(
-                InviteToChannelRequest(channel=chat, users=[user.id])
-            )
+            await bot(InviteToChannelRequest(channel=chat, users=[user.id]))
             s = s + 1
             await man.edit(
                 f"**Terminal Running**\n\n• **Menambahkan** `{s}` **orang** \n• **Gagal Menambahkan** `{f}` **orang**\n\n**× LastError:** `{error}`"
