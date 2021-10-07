@@ -279,7 +279,7 @@ async def resize_photo(photo):
     return image
 
 
-@register(outgoing=True, pattern=r"^\.stkrinfo$")
+@register(outgoing=True, pattern=r"^\.stickerinfo$")
 async def get_pack_info(event):
     if not event.is_reply:
         return await event.edit("**Mohon Balas Ke Sticker**")
@@ -475,8 +475,8 @@ CMD_HELP.update(
         \n  •  **Function : **Untuk Menghapus sticker dari Sticker Pack.\
         \n\n  •  **Syntax :** `.editsticker` <reply sticker> <emoji>\
         \n  •  **Function : **Untuk Mengedit emoji stiker dengan emoji yang baru.\
-        \n\n  •  **Syntax :** `.stkrinfo`\
-        \n  •  **Function : **Dapatkan Informasi Sticker Pack.\
+        \n\n  •  **Syntax :** `.stickerinfo`\
+        \n  •  **Function : **Untuk Mendapatkan Informasi Sticker Pack.\
         \n\n  •  **Syntax :** `.findsticker` <nama pack sticker>\
         \n  •  **Function : **Untuk Mencari Sticker Pack.\
         \n\n  •  **NOTE:** Untuk Membuat Sticker Pack baru Gunakan angka dibelakang `.kang`\
