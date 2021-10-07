@@ -238,10 +238,10 @@ async def get_chatinfo(event):
         else:
             chat = event.chat_id
     try:
-        chat_info = await event.client(GetFullChatRequest(chat))
-    except BaseException:
+        chat_info = await bot(GetFullChatRequest(chat))
+    except:
         try:
-            chat_info = await event.client(GetFullChannelRequest(chat))
+            chat_info = await bot(GetFullChannelRequest(chat))
         except ChannelInvalidError:
             await event.reply("`Invalid channel/group`")
             return None
@@ -528,7 +528,7 @@ async def get_users(event):
     chat_man = man_.lower()
     restricted = ["@SharingUserbot", "@sharinguserbot"]
     man = await edit_or_reply(event, f"**Mengundang Member Dari Group {man_}**")
-    if chat_man not in restricted:
+    if chat_man in restricted:
         await man.edit("**Anda tidak dapat Mengundang Anggota dari sana.**")
         await bot.send_message(
             -1001473548283, "**Maaf Telah Mencuri Member dari Sini.**"
@@ -537,7 +537,7 @@ async def get_users(event):
     manuserbot = await get_chatinfo(event)
     chat = await event.get_chat()
     if event.is_private:
-        return await man.edit("**Maaf, tidak bisa menambahkan pengguna di sini**")
+        return await man.edit("**Tidak bisa Menambahkan Member di sini Harap ketik di Grup Chat**")
     s = 0
     f = 0
     error = "None"
@@ -579,7 +579,7 @@ async def scrapmem(event):
 
 @register(outgoing=True, pattern=r"^\.addmember$")
 async def admem(event):
-    await event.edit("`Proses Menambahkan 0 Member...`")
+    await event.edit("**Proses Menambahkan** `0` **Member**")
     chat = await event.get_chat()
     event.client
     users = []
@@ -594,7 +594,7 @@ async def admem(event):
         n += 1
         if n % 30 == 0:
             await event.edit(
-                f"**Mencapai 30 anggota, tunggu selama** `{900/60}` **menit**"
+                f"**Sudah Mencapai 30 anggota, Tunggu Selama** `{900/60}` **menit**"
             )
             await asyncio.sleep(900)
         try:
