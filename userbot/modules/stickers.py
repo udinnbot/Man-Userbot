@@ -311,7 +311,7 @@ async def get_pack_info(event):
             pack_emojis.append(document_sticker.emoticon)
 
     OUTPUT = (
-        f"➠ **Nama Sticker:** [{get_stickerset.set.title}](http://t.me/addstickers/{get_stickerset.set.short_name})\n`"
+        f"➠ **Nama Sticker:** [{get_stickerset.set.title}](http://t.me/addstickers/{get_stickerset.set.short_name})\n"
         f"➠ **Official:** `{get_stickerset.set.official}`\n"
         f"➠ **Arsip:** `{get_stickerset.set.archived}`\n"
         f"➠ **Sticker Dalam Pack:** `{len(get_stickerset.packs)}`\n"
