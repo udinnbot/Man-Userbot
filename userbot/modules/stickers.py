@@ -358,9 +358,7 @@ async def _(event):
         elif response.text.startswith(
             "You don't have any sticker packs yet. You can create one using the /newpack command."
         ):
-            await event.edit(
-                "**Anda Tidak Memiliki Stiker untuk di Hapus**"
-            )
+            await event.edit("**Anda Tidak Memiliki Stiker untuk di Hapus**")
         elif response.text.startswith("Please send me the sticker."):
             await event.edit("**Tolong Reply ke Sticker yang ingin dihapus**")
         elif response.text.startswith("Invalid pack selected."):
