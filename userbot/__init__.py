@@ -208,7 +208,7 @@ BOT_VER = os.environ.get("BOT_VER", "0.6.9")
 ALIVE_USERNAME = os.environ.get("ALIVE_USERNAME", None)
 
 # Sticker Custom Pack Name
-S_PACK_NAME = os.environ.get("S_PACK_NAME", None)
+S_PACK_NAME = os.environ.get("S_PACK_NAME", f"{ALIVE_NAME} Sticker Pack")
 
 # Default .alive logo
 ALIVE_LOGO = os.environ.get(
