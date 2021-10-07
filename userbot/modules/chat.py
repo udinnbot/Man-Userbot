@@ -239,7 +239,7 @@ async def get_chatinfo(event):
             chat = event.chat_id
     try:
         chat_info = await bot(GetFullChatRequest(chat))
-    except:
+    except BaseException:
         try:
             chat_info = await bot(GetFullChannelRequest(chat))
         except ChannelInvalidError:
@@ -537,7 +537,9 @@ async def get_users(event):
     manuserbot = await get_chatinfo(event)
     chat = await event.get_chat()
     if event.is_private:
-        return await man.edit("**Tidak bisa Menambahkan Member di sini Harap ketik di Grup Chat**")
+        return await man.edit(
+            "**Tidak bisa Menambahkan Member di sini Harap ketik di Grup Chat**"
+        )
     s = 0
     f = 0
     error = "None"
