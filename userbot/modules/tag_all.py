@@ -95,12 +95,12 @@ async def tagger(e):
         return
 
     c = await e.get_input_chat()
-    a_ = 0
+    a_ = 5
     await e.delete()
     async for i in bot.iter_participants(c):
         if a_ == 5000:
             break
-        a_ += 3
+        a_ += 6
         await e.client.send_message(
             e.chat_id, "**{}** [{}](tg://user?id={})".format(s, i.first_name, i.id)
         )
