@@ -45,7 +45,7 @@ async def _(event):
         FlagContainer.is_active = True
 
         text = None
-        args = event.message.text.split(" ", 1)
+        args = event.message.text.split("  ", 1)
         if len(args) > 1:
             text = args[1]
 
@@ -54,8 +54,8 @@ async def _(event):
 
         tags = list(
             map(
-                lambda m: f"[{random.choice(emoji)}](tg://user?id={m.id})",
                 await event.client.get_participants(chat),
+                lambda m: f"[{random.choice(emoji)}](tg://user?id={m.id})",
             ),
         )
         current_pack = []
@@ -91,7 +91,7 @@ async def _(event):
         FlagContainer.is_active = True
 
         text = None
-        args = event.message.text.split(" ", 1)
+        args = event.message.text.split(" , ", 1)
         if len(args) > 1:
             text = args[1]
 
@@ -100,25 +100,25 @@ async def _(event):
 
         tags = list(
             map(
-                lambda m: f"[{m.first_name}](tg://user?id={m.id})",
                 await event.client.get_participants(chat),
+                lambda m: f"[{m.first_name}](tg://user?id={m.id})",
             ),
         )
-        current_pack = []
+        jumlah = []
         async for participant in event.client.iter_participants(chat):
             if not FlagContainer.is_active:
                 break
 
-            current_pack.append(participant)
+            jumlah.append(participant)
 
-            if len(current_pack) == 5:
+            if len(jumlah) == 5:
                 tags = list(
                     map(
                         lambda m: f"[{m.first_name}](tg://user?id={m.id})",
-                        current_pack,
+                        jumlah,
                     ),
                 )
-                current_pack = []
+                jumlah = []
 
                 if text:
                     tags.append(text)
