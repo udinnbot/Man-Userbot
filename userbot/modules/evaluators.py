@@ -20,7 +20,10 @@ MAX_MESSAGE_SIZE_LIMIT = 4095
 
 async def aexec(code, smessatatus):
     message = event = smessatatus
-    p = lambda _x: print(_format.yaml_format(_x))
+
+    def p(_x):
+        return print(_format.yaml_format(_x))
+
     reply = await event.get_reply_message()
     exec(
         (
