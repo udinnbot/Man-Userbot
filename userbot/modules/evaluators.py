@@ -47,8 +47,7 @@ async def _(event):
     stdout, stderr, exc = None, None, None
     reply_to_id = event.message.id
 
-    async def aexec(code, smessatatus):
-    message = event = smessatatus
+    async def aexec(code, event):
     p = lambda _x: print(_format.yaml_format(_x))
     reply = await event.get_reply_message()
     exec(
