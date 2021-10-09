@@ -23,7 +23,7 @@ p = print
 async def _(event):
     expression = event.pattern_match.group(1)
     if not expression:
-        return await event.edit("**Give an expression to evaluate.**")
+        return await event.edit("**Berikan Code untuk di eksekusi.**")
 
     if expression in ("userbot.session", "config.env"):
         return await event.edit("**Itu operasi yang berbahaya! Tidak diperbolehkan!**")
