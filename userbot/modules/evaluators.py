@@ -13,7 +13,6 @@ from os import remove
 
 from userbot import CMD_HELP, bot
 from userbot.events import register
-from userbot.utils import edit_delete, edit_or_reply
 
 MAX_MESSAGE_SIZE_LIMIT = 4095
 
