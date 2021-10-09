@@ -54,8 +54,8 @@ async def _(event):
 
         tags = list(
             map(
-                await event.client.get_participants(chat),
                 lambda m: f"[{random.choice(emoji)}](tg://user?id={m.id})",
+                await event.client.get_participants(chat),
             ),
         )
         current_pack = []
@@ -100,8 +100,8 @@ async def _(event):
 
         tags = list(
             map(
-                await event.client.get_participants(chat),
                 lambda m: f"[{m.first_name}](tg://user?id={m.id})",
+                await event.client.get_participants(chat),
             ),
         )
         jumlah = []
