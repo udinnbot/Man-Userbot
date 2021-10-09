@@ -1,4 +1,5 @@
 config.env
+TG_BOT_TOKEN.session
 __pycache__/*
 userbot.db
 userbot.session
@@ -9,4 +10,3 @@ userbot/modules/sql_helper/__pycache__/*
 .progress
 .vscode/*
 bin/*
-TG_BOT_TOKEN.session
