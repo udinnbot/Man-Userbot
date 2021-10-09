@@ -16,6 +16,8 @@ from userbot.events import register
 
 MAX_MESSAGE_SIZE_LIMIT = 4095
 
+p = print
+
 
 @register(outgoing=True, pattern=r"^\.eval(?: |$|\n)([\s\S]*)")
 async def evaluate(event):
@@ -32,16 +34,25 @@ async def evaluate(event):
     old_stdout = sys.stdout
     redirected_output = sys.stdout = StringIO()
     redirected_error = sys.stderr = StringIO()
-    stdout, stderr, exc, returned = None, None, None, None
+    stdout, stderr, exc, = (
+        None,
+        None,
+        None,
+    )
 
     async def aexec(code, event):
-        head = "async def __aexec(event):\n "
-        code = "".join(f"\n {line}" for line in code.split("\n"))
-        exec(head + code)  # pylint: disable=exec-used
-        return await locals()["__aexec"](event)
+        exec(
+            f"async def __aexec(e, client): "
+            + "\n message = event = e"
+            + "\n reply = await event.get_reply_message()"
+            + "\n chat = (await event.get_chat()).id"
+            + "".join(f"\n {line}" for line in code.split("\n")),
+        )
+
+        return await locals()["__aexec"](event, event.client)
 
     try:
-        returned = await aexec(expression, event)
+        await aexec(expression, event)
     except Exception:  # pylint: disable=broad-except
         exc = format_exc()
 
@@ -51,7 +62,7 @@ async def evaluate(event):
     sys.stderr = old_stderr
     expression.encode("unicode-escape").decode().replace("\\\\", "\\")
 
-    evaluation = str(exc or stderr or stdout or returned)
+    evaluation = str(exc or stderr or stdout)
     if evaluation and evaluation != "":
         evaluation = evaluation.encode("unicode-escape").decode().replace("\\\\", "\\")
     else:
