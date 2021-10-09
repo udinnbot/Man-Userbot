@@ -37,6 +37,18 @@ async def _(event):
     redirected_error = sys.stderr = io.StringIO()
     stdout, stderr, exc = None, None, None
     reply_to_id = event.message.id
+
+    async def aexec(code, event):
+        exec(
+            f"async def __aexec(e, client): "
+            + "\n message = event = e"
+            + "\n reply = await event.get_reply_message()"
+            + "\n chat = (await event.get_chat()).id"
+            + "".join(f"\n {line}" for line in code.split("\n")),
+        )
+
+        return await locals()["__aexec"](event, event.client)
+
     try:
         await aexec(cmd, event)
     except Exception:
@@ -186,17 +198,6 @@ async def _(event):
             await event.delete()
     else:
         await event.edit("`{}`".format(the_real_message))
-
-    async def aexec(code, event):
-        exec(
-            f"async def __aexec(e, client): "
-            + "\n message = event = e"
-            + "\n reply = await event.get_reply_message()"
-            + "\n chat = (await event.get_chat()).id"
-            + "".join(f"\n {line}" for line in code.split("\n")),
-        )
-
-        return await locals()["__aexec"](event, event.client)
 
 
 CMD_HELP.update(
