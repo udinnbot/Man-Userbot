@@ -28,7 +28,6 @@ from userbot import (
     CHANNEL,
     CMD_HELP,
     GROUP,
-    UPSTREAM_REPO_BRANCH,
     StartTime,
     bot,
 )
