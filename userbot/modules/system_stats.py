@@ -177,53 +177,6 @@ async def bot_ver(event):
         await event.edit("anda tidak memiliki git, Anda Menjalankan Bot - 'v1.beta.4'!")
 
 
-@register(outgoing=True, pattern=r"^\.pip(?: |$)(.*)")
-async def pipcheck(pip):
-    if pip.text[0].isalpha() or pip.text[0] in ("/", "#", "@", "!"):
-        return
-    pipmodule = pip.pattern_match.group(1)
-    if pipmodule:
-        await pip.edit("`Sedang Mencari...`")
-        pipc = await asyncrunapp(
-            "pip3",
-            "search",
-            pipmodule,
-            stdout=asyncPIPE,
-            stderr=asyncPIPE,
-        )
-
-        stdout, stderr = await pipc.communicate()
-        pipout = str(stdout.decode().strip()) + str(stderr.decode().strip())
-
-        if pipout:
-            if len(pipout) > 4096:
-                await pip.edit("`Output Terlalu Besar, Dikirim Sebagai File`")
-                with open("output.txt", "w+") as file:
-                    file.write(pipout)
-                await pip.client.send_file(
-                    pip.chat_id,
-                    "output.txt",
-                    reply_to=pip.id,
-                )
-                remove("output.txt")
-                return
-            await pip.edit(
-                "**Query: **\n`"
-                f"pip3 search {pipmodule}"
-                "`\n**Result: **\n`"
-                f"{pipout}"
-                "`"
-            )
-        else:
-            await pip.edit(
-                "**Query: **\n`"
-                f"pip3 search {pipmodule}"
-                "`\n**Result: **\n`Tidak Ada Hasil yang Temukan/Salah`"
-            )
-    else:
-        await pip.edit("**Gunakan** `.help pip` **Untuk Melihat Contoh**")
-
-
 @register(outgoing=True, pattern=r"^\.(?:calive)\s?(.)?")
 async def amireallyalive(alive):
     user = await bot.get_me()
@@ -348,8 +301,6 @@ CMD_HELP.update(
         \n  •  **Function : **Menampilkan informasi sistem menggunakan neofetch\
         \n\n\n  •  **Syntax :** `.botver`\
         \n  •  **Function : **Menampilkan versi userbot\
-        \n\n  •  **Syntax :** `.pip` <modules>\
-        \n  •  **Function : **Melakukan pencarian modul pip\
         \n\n  •  **Syntax :** `.db`\
         \n  •  **Function : **Menampilkan info terkait database.\
         \n\n  •  **Syntax :** `.spc`\
