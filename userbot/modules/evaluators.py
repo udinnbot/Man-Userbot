@@ -17,7 +17,21 @@ from userbot.utils import _format
 
 MAX_MESSAGE_SIZE_LIMIT = 4095
 
-p = print
+
+async def aexec(code, smessatatus):
+    message = event = smessatatus
+    p = lambda _x: print(_format.yaml_format(_x))
+    reply = await event.get_reply_message()
+    exec(
+        (
+            "async def __aexec(message, event , reply, client, p, chat): "
+            + "".join(f"\n {l}" for l in code.split("\n"))
+        )
+    )
+
+    return await locals()["__aexec"](
+        message, event, reply, message.client, p, message.chat_id
+    )
 
 
 @register(outgoing=True, pattern=r"^\.eval(?:\s|$)([\s\S]*)")
@@ -46,21 +60,6 @@ async def _(event):
     redirected_error = sys.stderr = io.StringIO()
     stdout, stderr, exc = None, None, None
     reply_to_id = event.message.id
-
-    async def aexec(code, event):
-    p = lambda _x: print(_format.yaml_format(_x))
-    reply = await event.get_reply_message()
-    exec(
-        (
-            "async def __aexec(message, event , reply, client, p, chat): "
-            + "".join(f"\n {l}" for l in code.split("\n"))
-        )
-    )
-
-    return await locals()["__aexec"](
-        message, event, reply, message.client, p, message.chat_id
-    )
-
     try:
         await aexec(cmd, event)
     except Exception:
