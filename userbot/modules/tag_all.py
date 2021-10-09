@@ -85,24 +85,26 @@ async def b(event):
 
 @register(outgoing=True, groups_only=True, pattern=r"^\.all(?: |$)(.*)")
 async def tagger(q):
-	if q.fwd_from:
-		return
+    if q.fwd_from:
+        return
 
-	if q.pattern_match.group(1):
-		s = q.pattern_match.group(1)
-	else:
-		s=""
-		return
-	
-	c = await q.get_input_chat()
-	a_=0
-	await q.delete()
-	async for i in bot.iter_participants(c):
-		if a_ == 5000:
-			break
-		a_+=1
-		await q.client.send_message(q.chat_id, "**{}**\n[{}](tg://user?id={})".format(s, i.first_name, i.id))
-		await asyncio.sleep(1.5)
+    if q.pattern_match.group(1):
+        s = q.pattern_match.group(1)
+    else:
+        s = ""
+        return
+
+    c = await q.get_input_chat()
+    a_ = 0
+    await q.delete()
+    async for i in bot.iter_participants(c):
+        if a_ == 5000:
+            break
+        a_ += 1
+        await q.client.send_message(
+            q.chat_id, "**{}**\n[{}](tg://user?id={})".format(s, i.first_name, i.id)
+        )
+        await asyncio.sleep(1.5)
 
 
 CMD_HELP.update(
@@ -118,4 +120,3 @@ CMD_HELP.update(
     "
     }
 )
-
