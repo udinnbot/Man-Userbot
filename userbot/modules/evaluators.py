@@ -20,7 +20,7 @@ MAX_MESSAGE_SIZE_LIMIT = 4095
 p = print
 
 
-@register(outgoing=True, pattern=r"^\.eval(?: |$|\n)([\s\S]*)")
+@register(outgoing=True, pattern=r"^\.eval(?:\s|$)([\s\S]*)")
 async def _(event):
     cmd = "".join(event.message.message.split(maxsplit=1)[1:])
     if not cmd:
