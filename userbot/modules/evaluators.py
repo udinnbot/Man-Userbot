@@ -24,13 +24,13 @@ p = print
 async def _(event):
     cmd = "".join(event.message.message.split(maxsplit=1)[1:])
     if not cmd:
-        return await edit_delete(event, "`Apa yang harus saya jalankan?`")
+        return event.edit("**Apa yang harus saya jalankan?**")
     cmd = (
         cmd.replace("sendmessage", "send_message")
         .replace("sendfile", "send_file")
         .replace("editmessage", "edit_message")
     )
-    xx = await edit_or_reply(event, "`Processing...`")
+    xx = await event.edit("`Processing...`")
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
     old_stderr = sys.stderr
