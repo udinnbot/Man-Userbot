@@ -21,6 +21,9 @@ p = print
 
 @register(outgoing=True, pattern=r"^\.eval(?:\s|$)([\s\S]*)")
 async def _(event):
+    expression = event.pattern_match.group(1)
+    if not expression:
+        return await event.edit("**Give an expression to evaluate.**")
     cmd = "".join(event.message.message.split(maxsplit=1)[1:])
     if not cmd:
         return event.edit("**Apa yang harus saya jalankan?**")
