@@ -1,5 +1,6 @@
 config.env
 TG_BOT_TOKEN.session
+TG_BOT_TOKEN.session-journal
 __pycache__/*
 userbot.db
 userbot.session
