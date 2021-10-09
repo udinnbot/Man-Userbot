@@ -67,7 +67,7 @@ async def pingme(pong):
         f"**PONG!!🏓**\n"
         f"✣ **Pinger** - `%sms`\n"
         f"✣ **Uptime -** `{uptime}` \n"
-        f"**✦҈͜͡Owner :** [{ALIVE_NAME}](tg://user?id={user.id})" % (duration)
+        f"**✦҈͜͡Owner :** [{user.first_name}](tg://user?id={user.id})" % (duration)
     )
 
 
@@ -102,7 +102,7 @@ async def pingme(pong):
         f"`%sms` \n"
         f"❃ **Uptime -** "
         f"`{uptime}` \n"
-        f"**✦҈͜͡➳ Master :** [{ALIVE_NAME}](tg://user?id={user.id})" % (duration)
+        f"**✦҈͜͡➳ Master :** [{user.first_name}](tg://user?id={user.id})" % (duration)
     )
 
 
@@ -139,11 +139,12 @@ async def pingme(pong):
     )
     end = datetime.now()
     duration = (end - start).microseconds / 1000
+    user = await bot.get_me()
     await pong.edit(
         f"**PONG!!🏓**\n"
         f"✣ **Pinger** - `%sms`\n"
         f"✣ **Uptime -** `{uptime}` \n"
-        f"**✦҈͜͡Owner :** `{ALIVE_NAME}`" % (duration)
+        f"**✦҈͜͡Owner :** [{user.first_name}](tg://user?id={user.id})" % (duration)
     )
 
 
@@ -209,7 +210,7 @@ async def typewriter(typew):
     await typew.edit("`Getting Information...`")
     sleep(1)
     await typew.edit(
-        "**Informasi Dyno Usage ★**:\n\n╭━━━━━━━━━━━━━━━━━━━━╮\n"
+        "**Informasi Dyno Usage ★**:\n╭━━━━━━━━━━━━━━━━━━━━╮\n"
         f"-> `Penggunaan Dyno` **{ALIVE_NAME}**:\n"
         f" ❉ **10 Jam - "
         f"51 Menit - 0%**"
