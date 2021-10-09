@@ -96,6 +96,7 @@ async def pingme(pong):
     await pong.edit("**✦҈͜͡➳ PONG!**")
     end = datetime.now()
     duration = (end - start).microseconds / 1000
+    user = await bot.get_me()
     await pong.edit(
         f"❃ **Ping !!** "
         f"`%sms` \n"
