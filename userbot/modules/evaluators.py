@@ -7,12 +7,9 @@
 
 import asyncio
 import io
-import os
 import sys
 import traceback
-from io import StringIO
 from os import remove
-from traceback import format_exc
 
 from userbot import CMD_HELP, bot
 from userbot.events import register
@@ -57,9 +54,7 @@ async def _(event):
         evaluation = stdout
     else:
         evaluation = "Success"
-    final_output = (
-        f"**•  Eval : **\n`{cmd}` \n\n**•  Result : **\n`{evaluation}` \n"
-    )
+    final_output = f"**•  Eval : **\n`{cmd}` \n\n**•  Result : **\n`{evaluation}` \n"
 
     if len(final_output) > 4096:
         man = final_output.replace("`", "").replace("**", "").replace("__", "")
@@ -191,7 +186,6 @@ async def _(event):
             await event.delete()
     else:
         await event.edit("`{}`".format(the_real_message))
-
 
     async def aexec(code, event):
         exec(
