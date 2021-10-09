@@ -13,28 +13,10 @@ from os import remove
 
 from userbot import CMD_HELP, bot
 from userbot.events import register
-from userbot.utils import _format
 
 MAX_MESSAGE_SIZE_LIMIT = 4095
 
-
-async def aexec(code, smessatatus):
-    message = event = smessatatus
-
-    def p(_x):
-        return print(_format.yaml_format(_x))
-
-    reply = await event.get_reply_message()
-    exec(
-        (
-            "async def __aexec(message, event , reply, client, p, chat): "
-            + "".join(f"\n {l}" for l in code.split("\n"))
-        )
-    )
-
-    return await locals()["__aexec"](
-        message, event, reply, message.client, p, message.chat_id
-    )
+p = print
 
 
 @register(outgoing=True, pattern=r"^\.eval(?:\s|$)([\s\S]*)")
@@ -63,6 +45,18 @@ async def _(event):
     redirected_error = sys.stderr = io.StringIO()
     stdout, stderr, exc = None, None, None
     reply_to_id = event.message.id
+
+    async def aexec(code, event):
+        exec(
+            f"async def __aexec(e, client): "
+            + "\n message = event = e"
+            + "\n reply = await event.get_reply_message()"
+            + "\n chat = (await event.get_chat()).id"
+            + "".join(f"\n {line}" for line in code.split("\n")),
+        )
+
+        return await locals()["__aexec"](event, event.client)
+
     try:
         await aexec(cmd, event)
     except Exception:
