@@ -25,7 +25,7 @@ class FlagContainer:
 
 
 @register(outgoing=True, pattern=r"^\.mention(?: |$)(.*)", disable_errors=True)
-async def all(event):
+async def _(event):
     if event.fwd_from:
         return
     await event.delete()
@@ -38,7 +38,7 @@ async def all(event):
 
 
 @register(outgoing=True, groups_only=True, pattern=r"^\.emojitag(?: |$)(.*)")
-async def b(event):
+async def _(event):
     if event.fwd_from or FlagContainer.is_active:
         return
     try:
@@ -84,7 +84,7 @@ async def b(event):
 
 
 @register(outgoing=True, groups_only=True, pattern=r"^\.all(?: |$)(.*)")
-async def b(event):
+async def _(event):
     if event.fwd_from or FlagContainer.is_active:
         return
     try:
