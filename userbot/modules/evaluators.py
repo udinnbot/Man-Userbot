@@ -7,6 +7,7 @@
 
 import asyncio
 import io
+import re
 import sys
 import traceback
 from os import remove
