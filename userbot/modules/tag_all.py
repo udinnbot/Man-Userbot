@@ -1,7 +1,10 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-"""A Plugin to tagall in the chat for @UniBorg and cmd is `.all`"""
+#
+# ReCode by @mrismanaziz
+# FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
+# t.me/SharingUserbot & t.me/Lunatic0de
 
 import asyncio
 import random
@@ -21,7 +24,7 @@ class FlagContainer:
     is_active = False
 
 
-@register(outgoing=True, pattern=r"^\.all(?: |$)(.*)", disable_errors=True)
+@register(outgoing=True, pattern=r"^\.mention(?: |$)(.*)", disable_errors=True)
 async def all(event):
     if event.fwd_from:
         return
@@ -75,26 +78,44 @@ async def b(event):
                     tags.append(text)
 
                 await event.client.send_message(event.chat_id, " ".join(tags))
-                await asyncio.sleep(1.3)
+                await asyncio.sleep(1.5)
     finally:
         FlagContainer.is_active = False
 
 
+@register(outgoing=True, groups_only=True, pattern=r"^\.all(?: |$)(.*)")
+async def tagger(q):
+	if q.fwd_from:
+		return
+
+	if q.pattern_match.group(1):
+		s = q.pattern_match.group(1)
+	else:
+		s=""
+		return
+	
+	c = await q.get_input_chat()
+	a_=0
+	await q.delete()
+	async for i in bot.iter_participants(c):
+		if a_ == 5000:
+			break
+		a_+=1
+		await q.client.send_message(q.chat_id, "**{}**\n[{}](tg://user?id={})".format(s, i.first_name, i.id))
+		await asyncio.sleep(1.5)
+
+
 CMD_HELP.update(
     {
-        "tag_all": "**Plugin : **`tag_all`\
+        "tag": "**Plugin : **`tag`\
+        \n\n  •  **Syntax :** `.mention`\
+        \n  •  **Function : **Untuk Menmention semua anggota yang ada di group tanpa menyebut namanya.\
         \n\n  •  **Syntax :** `.all`\
-        \n  •  **Function : **Untuk Mengetag semua anggota yang ada di group.\
+        \n  •  **Function : **Untuk Mengetag semua anggota Maksimal 3.000 orang yg akan ditag di grup untuk mengurangi flood wait telegram.\
+        \n\n  •  **Syntax :** `.emojitag` <text>\
+        \n  •  **Function : **Untuk Mengetag semua anggota di grup dengan random emoji berbeda.\
+        \n\n  •  **NOTE :** Untuk Memberhentikan Tag ketik `.restart`\
     "
     }
 )
 
-
-CMD_HELP.update(
-    {
-        "emojitag": "**Plugin : **`emojitag`\
-        \n\n  •  **Syntax :** `.emojitag`\
-        \n  •  **Function : **Untuk Mengetag semua anggota di grup dengan emoji berbeda..\
-    "
-    }
-)
