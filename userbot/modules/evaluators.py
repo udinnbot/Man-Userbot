@@ -17,6 +17,8 @@ from userbot.utils import edit_delete, edit_or_reply
 
 MAX_MESSAGE_SIZE_LIMIT = 4095
 
+p = print
+
 
 @register(outgoing=True, pattern=r"^\.eval(?: |$|\n)([\s\S]*)")
 async def _(event):
