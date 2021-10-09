@@ -15,7 +15,8 @@ class CatGloballist(BASE):
         self.group_id = str(group_id)
 
     def __repr__(self):
-        return "<Cat global values '%s' for %s>" % (self.group_id, self.keywoard)
+        return "<Cat global values '%s' for %s>" % (
+            self.group_id, self.keywoard)
 
     def __eq__(self, other):
         return bool(
@@ -43,14 +44,17 @@ def add_to_list(keywoard, group_id):
         broadcast_group = CatGloballist(keywoard, str(group_id))
         SESSION.merge(broadcast_group)
         SESSION.commit()
-        GLOBALLIST_SQL_.GLOBALLIST_VALUES.setdefault(keywoard, set()).add(str(group_id))
+        GLOBALLIST_SQL_.GLOBALLIST_VALUES.setdefault(
+            keywoard, set()).add(str(group_id))
 
 
 def rm_from_list(keywoard, group_id):
     with CATGLOBALLIST_INSERTION_LOCK:
-        broadcast_group = SESSION.query(CatGloballist).get((keywoard, str(group_id)))
+        broadcast_group = SESSION.query(
+            CatGloballist).get((keywoard, str(group_id)))
         if broadcast_group:
-            if str(group_id) in GLOBALLIST_SQL_.GLOBALLIST_VALUES.get(keywoard, set()):
+            if str(group_id) in GLOBALLIST_SQL_.GLOBALLIST_VALUES.get(
+                    keywoard, set()):
                 GLOBALLIST_SQL_.GLOBALLIST_VALUES.get(keywoard, set()).remove(
                     str(group_id)
                 )
@@ -64,7 +68,8 @@ def rm_from_list(keywoard, group_id):
 
 def is_in_list(keywoard, group_id):
     with CATGLOBALLIST_INSERTION_LOCK:
-        broadcast_group = SESSION.query(CatGloballist).get((keywoard, str(group_id)))
+        broadcast_group = SESSION.query(
+            CatGloballist).get((keywoard, str(group_id)))
         return bool(broadcast_group)
 
 
@@ -111,7 +116,10 @@ def num_list_keyword(keywoard):
 
 def num_list_keywords():
     try:
-        return SESSION.query(func.count(distinct(CatGloballist.keywoard))).scalar()
+        return SESSION.query(
+            func.count(
+                distinct(
+                    CatGloballist.keywoard))).scalar()
     finally:
         SESSION.close()
 
