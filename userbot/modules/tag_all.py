@@ -78,33 +78,55 @@ async def b(event):
                     tags.append(text)
 
                 await event.client.send_message(event.chat_id, " ".join(tags))
-                await asyncio.sleep(1.5)
+                await asyncio.sleep(2)
     finally:
         FlagContainer.is_active = False
 
 
 @register(outgoing=True, groups_only=True, pattern=r"^\.all(?: |$)(.*)")
-async def tagger(e):
-    if e.fwd_from:
+async def b(event):
+    if event.fwd_from or FlagContainer.is_active:
         return
+    try:
+        FlagContainer.is_active = True
 
-    if e.pattern_match.group(1):
-        s = e.pattern_match.group(1)
-    else:
-        s = ""
-        return
+        text = None
+        args = event.message.text.split(" ", 1)
+        if len(args) > 1:
+            text = args[1]
 
-    c = await e.get_input_chat()
-    a_ = 5
-    await e.delete()
-    async for i in bot.iter_participants(c):
-        if a_ == 5000:
-            break
-        a_ += 6
-        await e.client.send_message(
-            e.chat_id, "**{}** [{}](tg://user?id={})".format(s, i.first_name, i.id)
+        chat = await event.get_input_chat()
+        await event.delete()
+
+        tags = list(
+            map(
+                lambda m: f"[{m.first_name}](tg://user?id={m.id})",
+                await event.client.get_participants(chat),
+            ),
         )
-        await asyncio.sleep(1.5)
+        current_pack = []
+        async for participant in event.client.iter_participants(chat):
+            if not FlagContainer.is_active:
+                break
+
+            current_pack.append(participant)
+
+            if len(current_pack) == 5:
+                tags = list(
+                    map(
+                        lambda m: f"[{m.first_name}](tg://user?id={m.id})",
+                        current_pack,
+                    ),
+                )
+                current_pack = []
+
+                if text:
+                    tags.append(text)
+
+                await event.client.send_message(event.chat_id, " ".join(tags))
+                await asyncio.sleep(2)
+    finally:
+        FlagContainer.is_active = False
 
 
 CMD_HELP.update(
