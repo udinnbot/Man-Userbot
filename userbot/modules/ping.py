@@ -3,9 +3,8 @@
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
 #
-# ReCode by @mrismanaziz
-# FROM Man-Userbot <https://github.com/mrismanaziz/Man-Userbot>
-# t.me/SharingUserbot & t.me/Lunatic0de
+#
+# FROM udinnUserbot <https://github.com/udinnbot/udinnUserbot
 
 import random
 import time
@@ -57,15 +56,15 @@ async def _(ping):
     """For .ping command, ping the userbot from any chat."""
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
-    await ping.edit("**✣**")
-    await ping.edit("**✣✣**")
-    await ping.edit("**✣✣✣**")
-    await ping.edit("**✣✣✣✣**")
+    await ping.edit("**N**")
+    await ping.edit("**NG**")
+    await ping.edit("**NGE**")
+    await ping.edit("NGEN**")
     end = datetime.now()
     duration = (end - start).microseconds / 1000
     user = await bot.get_me()
     await ping.edit(
-        f"**PONG!!🏓**\n"
+        f"**TODD!!**\n"
         f"✣ **Pinger** - `%sms`\n"
         f"✣ **Uptime -** `{uptime}` \n"
         f"**✦҈͜͡Owner :** [{user.first_name}](tg://user?id={user.id})" % (duration)
